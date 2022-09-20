@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+
+<div >
+    <label for="search-box">Album Search</label>
+    <input #searchBox id="search-box" />
+    <button (click)="search(searchBox.value)"> Suchen </button>
+    <ul class="search-result">
+        <li *ngFor="let album of albums" >
+        </li>
+    </ul>
+</div>
