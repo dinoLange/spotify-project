@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { EMPTY, Observable } from 'rxjs';
 
 export interface Item {
 }
@@ -91,20 +92,58 @@ export interface SearchItem {
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SpotifyService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    console.log('constructed spotify-service');
+    
+  }
+
+  headers: HttpHeaders|undefined;
 
   apiBase = 'https://api.spotify.com/v1';
 
-  public albumSearch(searchString: String, access_token: String) {
+  public albumSearch(searchString: String,) {
     var url = this.apiBase + "/search?q=" + searchString + "&type=album";
-    const headers= new HttpHeaders()
-    .set('Authorization', 'Bearer ' + access_token)
+    return this.apiCall(url);
+
+  }
+
+  private apiCall(url: string) {  
+    if (!this.headers) {      
+        this.login();
+        return EMPTY;
+    } else {   
+        return this.http.get<any>(url, { 'headers': this.headers });
+    }
+  }
+
+  login() {
+    console.log('start login');
+
+    var client_id = '1ec6cb1a181e47368d762606d2851929'; // Your client id
+    var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+    // var state = generateRandomString(16);
+    // localStorage.setItem(stateKey, state);
+    var scope = 'user-read-private user-read-email';
+
+    var url = 'https://accounts.spotify.com/authorize';
+    url += '?response_type=token';
+    url += '&client_id=' + encodeURIComponent(client_id);
+    url += '&scope=' + encodeURIComponent(scope);
+    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    // url += '&state=' + encodeURIComponent(state);
+    
+    location.href = url;       
+  }
+
+  setAccessToken(access_token: string) {
+    this.headers = new HttpHeaders()
     .set('Content-Type', 'application/json')
-    return this.http.get<any>(url, { 'headers': headers });
+    .set('Authorization', 'Bearer ' + access_token);
   }
 
 }
