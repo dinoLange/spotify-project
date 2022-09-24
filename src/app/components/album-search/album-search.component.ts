@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Album, SearchItem, SpotifyService } from 'src/app/api/spotify.service';
+import {SpotifyService } from 'src/app/api/spotify.service';
+import { Album } from 'src/app/models/album';
+import { SearchItem } from 'src/app/models/search-item';
+import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-album-search',
@@ -10,7 +13,7 @@ export class AlbumSearchComponent implements OnInit {
  
   albums: Album[] = [];
   
-  constructor(private spotify: SpotifyService) { 
+  constructor(private spotify: SpotifyService, private player: PlayerService) { 
 
   }
   
@@ -18,10 +21,14 @@ export class AlbumSearchComponent implements OnInit {
   search(searchString: string) {   
     this.spotify.albumSearch(searchString).subscribe(
       (result:SearchItem) => {
-        console.log("result", result);        
-        this.albums = result.albums.albums;
+        console.log("result", result.albums);        
+        this.albums = result.albums.items;
       }
-      );
+    );
+  }
+
+  play(album: Album) {
+    this.player.play(album);
   }
 
     

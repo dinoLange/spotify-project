@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { SpotifyService } from './api/spotify.service';
 
 
 
@@ -9,13 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
   title: String = 'Spotify';
-  
-  
-  constructor() { 
-
-  }
-
-  
-
  
+
+  constructor() {}
+  
 }

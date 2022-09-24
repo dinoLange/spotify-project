@@ -1,10 +1,12 @@
 
 <div >
     <label for="search-box">Album Search</label>
-    <input #searchBox id="search-box" />
+    <input #searchBox id="search-box" (keyup.enter)="search(searchBox.value)"/>
     <button (click)="search(searchBox.value)"> Suchen </button>
-    <ul class="search-result">
+    <ul class="search-result" *ngIf="albums">
         <li *ngFor="let album of albums" >
+            Artist: {{album.artists[0].name}} Name: {{album.name}} 
+            <button (click)="play(album)">Play</button>
         </li>
     </ul>
 </div>
