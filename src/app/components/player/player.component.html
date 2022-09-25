@@ -1,1 +1,6 @@
-<button id="togglePlay" (click)="togglePlay()">Toggle Play</button>
+<label>Spielt gerade: {{currentTrack}}</label>
+<div>
+    <button (click)="previousTrack()">Prev</button>
+    <button (click)="togglePlay()">Toggle Play</button>
+    <button (click)="nextTrack()">Next</button>
+</div>

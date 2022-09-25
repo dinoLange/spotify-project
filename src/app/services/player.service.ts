@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { SpotifyService } from '../api/spotify.service';
 import { Album } from '../models/album';
 
@@ -9,6 +10,7 @@ export class PlayerService {
 
   player!: Spotify.Player;
   device_id!: string;
+  currentTrack: Subject<Spotify.Track> = new Subject<Spotify.Track>();
 
   constructor(private spotify: SpotifyService) { }
 
@@ -16,8 +18,7 @@ export class PlayerService {
     this.spotify.play(album.uri, this.device_id);
   }
 
-
-
+  
   initSpotifyWebPlayer(token: string) {
     this.player = new Spotify.Player({
       name: 'Web Playback SDK Quick Start Player',
@@ -55,10 +56,9 @@ export class PlayerService {
       }
     
       var current_track = state.track_window.current_track;
+      this.currentTrack.next(current_track);
       var next_track = state.track_window.next_tracks[0];
-    
-      console.log('Currently Playing', current_track);
-      console.log('Playing Next', next_track);
+      
     });
 
     this.player.addListener('player_state_changed', ({
@@ -66,9 +66,7 @@ export class PlayerService {
       duration,
       track_window: { current_track }
     }) => {
-      console.log('Currently Playing', current_track);
-      console.log('Position in Song', position);
-      console.log('Duration of Song', duration);
+      this.currentTrack.next(current_track);
     });
 
   }
@@ -84,4 +82,13 @@ export class PlayerService {
   togglePlay() {
     this.player.togglePlay();
   }
+
+  nextTrack() {
+    this.player.nextTrack();
+  }
+
+  previousTrack() {
+    this.player.previousTrack();
+  }
+
 }

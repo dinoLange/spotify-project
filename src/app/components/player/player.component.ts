@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { SpotifyService } from 'src/app/api/spotify.service';
 import { PlayerService } from 'src/app/services/player.service';
 
@@ -8,8 +8,9 @@ import { PlayerService } from 'src/app/services/player.service';
   styleUrls: ['./player.component.less']
 })
 export class PlayerComponent implements OnInit, OnDestroy {
+  currentTrack!: String;
 
-  constructor(private spotify: SpotifyService, private player: PlayerService) { 
+  constructor(private spotify: SpotifyService, private player: PlayerService, private ngZone: NgZone ) { 
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -20,10 +21,23 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.player.connect();
     }
 
+    this.player.currentTrack.subscribe(currentTrack => {
+      this.ngZone.run( () => {
+        this.currentTrack = currentTrack.name;
+     });
+    });
+  }
+
+  previousTrack() {
+    this.player.previousTrack();
   }
 
   togglePlay() {    
     this.player.togglePlay();
+  }
+
+  nextTrack() {
+    this.player.nextTrack();
   }
   
 
