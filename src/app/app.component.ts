@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { SpotifyService } from './api/spotify.service';
+import { SpotifyService } from './services/api/spotify.service';
 
 
 
@@ -9,9 +9,6 @@ import { SpotifyService } from './api/spotify.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title: String = 'Spotify';
- 
-
   constructor() {}
   
 }

@@ -1,5 +1,7 @@
 import { Artist } from "./artist";
 import { Image } from "./image";
+import { Tracks } from "./search-item";
+import { Track } from "./track";
 
 export interface Album {
     album_type: string;
@@ -15,5 +17,6 @@ export interface Album {
     total_tracks: number;
     type: string;
     uri: string;
+    tracks: Tracks;
 }
 

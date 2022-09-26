@@ -1,5 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { SpotifyService } from 'src/app/api/spotify.service';
+import { SpotifyService } from 'src/app/services/api/spotify.service';
 import { PlayerService } from 'src/app/services/player.service';
 
 @Component({

@@ -7,6 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlbumSearchComponent } from './components/album-search/album-search.component';
 import { LoginCallbackComponent } from './components/login-callback/login-callback.component';
 import { PlayerComponent } from './components/player/player.component';
+import { MainComponent } from './components/game/main/main.component';
+import { PlayComponent } from './components/game/play/play.component';
+import { StartComponent } from './components/game/start/start.component';
+import { FinishComponent } from './components/game/finish/finish.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule} from '@angular/material/list'
 
 @NgModule({
   declarations: [
@@ -14,11 +20,17 @@ import { PlayerComponent } from './components/player/player.component';
     AlbumSearchComponent,
     LoginCallbackComponent,
     PlayerComponent,
+    MainComponent,
+    PlayComponent,
+    StartComponent,
+    FinishComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatListModule
     ],
   providers: [],
   bootstrap: [AppComponent]

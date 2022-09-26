@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {SpotifyService } from 'src/app/api/spotify.service';
+import { Router } from '@angular/router';
+import {SpotifyService } from 'src/app/services/api/spotify.service';
 import { Album } from 'src/app/models/album';
 import { SearchItem } from 'src/app/models/search-item';
 import { PlayerService } from 'src/app/services/player.service';
@@ -10,7 +11,7 @@ import { PlayerService } from 'src/app/services/player.service';
   styleUrls: ['./album-search.component.less']
 })
 export class AlbumSearchComponent implements OnInit {
- 
+
   albums: Album[] = [];
   
   constructor(private spotify: SpotifyService, private player: PlayerService) { 
@@ -28,9 +29,8 @@ export class AlbumSearchComponent implements OnInit {
   }
 
   play(album: Album) {
-    this.player.play(album);
+    this.player.playAlbum(album.uri);
   }
-
     
   ngOnInit(): void {  }
 }

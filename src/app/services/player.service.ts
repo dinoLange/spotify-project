@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SpotifyService } from '../api/spotify.service';
+import { SpotifyService } from './api/spotify.service';
 import { Album } from '../models/album';
 
 @Injectable({
@@ -8,16 +8,31 @@ import { Album } from '../models/album';
 })
 export class PlayerService {
 
+
   player!: Spotify.Player;
   device_id!: string;
   currentTrack: Subject<Spotify.Track> = new Subject<Spotify.Track>();
 
   constructor(private spotify: SpotifyService) { }
 
-  play(album: Album) {    
-    this.spotify.play(album.uri, this.device_id);
+
+  playTrack(uri: string, position: number, duration: number) {
+    this.spotify.playTrack(uri, this.device_id, position, duration).subscribe(() => {
+        setTimeout(() => 
+        {
+          console.log('pause');
+          this.player.pause();
+
+        },
+        duration*1000);
+      }
+    );
+    
   }
 
+  playAlbum(uri: string) {
+    this.spotify.playContext(uri, this.device_id);
+  }
   
   initSpotifyWebPlayer(token: string) {
     this.player = new Spotify.Player({
@@ -68,6 +83,8 @@ export class PlayerService {
     }) => {
       this.currentTrack.next(current_track);
     });
+
+    this.player.pause();
 
   }
 

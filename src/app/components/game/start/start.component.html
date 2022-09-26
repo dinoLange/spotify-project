@@ -1,0 +1,9 @@
+<p>Do you want to start a game with these songs?</p>
+<button [routerLink]="['play']">Play!</button>
+<div *ngIf="tracks">
+    <mat-list>
+        <mat-list-item style="color: black" *ngFor="let track of tracks">
+            {{track.name}}
+        </mat-list-item>
+    </mat-list>
+</div>
