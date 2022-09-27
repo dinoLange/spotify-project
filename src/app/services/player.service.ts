@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SpotifyService } from './api/spotify.service';
 import { Album } from '../models/album';
 
@@ -12,22 +12,31 @@ export class PlayerService {
   player!: Spotify.Player;
   device_id!: string;
   currentTrack: Subject<Spotify.Track> = new Subject<Spotify.Track>();
+  currentTrack$: Observable<Spotify.Track> = this.currentTrack.asObservable();
+  forcePause = false;
+  forcePauseCounter = 0;
 
   constructor(private spotify: SpotifyService) { }
 
 
-  playTrack(uri: string, position: number, duration: number) {
-    this.spotify.playTrack(uri, this.device_id, position, duration).subscribe(() => {
-        setTimeout(() => 
-        {
-          console.log('pause');
-          this.player.pause();
+  initTrack(uri: string) {
+    this.forcePause = true;
+    this.spotify.playTrack(uri, this.device_id, 0).subscribe(() => {}); 
+    console.log('init track');
+       
+  }
 
-        },
-        duration*1000);
-      }
-    );
+
+  playCurrentTrack(position: number, duration: number) {
+    this.player.seek(position);
+    this.player.resume();
     
+    setTimeout(() => 
+      {
+        this.player.pause();
+      },
+      duration*1000
+    );
   }
 
   playAlbum(uri: string) {
@@ -77,14 +86,21 @@ export class PlayerService {
     });
 
     this.player.addListener('player_state_changed', ({
-      position,
-      duration,
-      track_window: { current_track }
-    }) => {
+      track_window: {current_track}
+    }) => {    
       this.currentTrack.next(current_track);
     });
 
-    this.player.pause();
+    this.player.addListener('player_state_changed', ({paused}) => {
+      if (this.forcePause && !paused) {
+        this.forcePauseCounter++;
+      }
+      if (this.forcePause && this.forcePauseCounter == 3) {
+        this.player.pause();
+        this.forcePause = false;
+        this.forcePauseCounter = 0; 
+      }            
+    });
 
   }
 

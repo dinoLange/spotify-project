@@ -13,7 +13,12 @@ import { StartComponent } from './components/game/start/start.component';
 import { FinishComponent } from './components/game/finish/finish.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule} from '@angular/material/list'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +35,12 @@ import { MatListModule} from '@angular/material/list'
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatListModule
+    MatFormFieldModule,
+    MatListModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

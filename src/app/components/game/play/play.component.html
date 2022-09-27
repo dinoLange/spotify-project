@@ -1,1 +1,29 @@
-<button (click)="playAgain()">Play again</button>
+
+<form class="example-form">
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Guess:</mat-label>
+    <input type="text"
+            placeholder="Pick one"
+            aria-label="Number"
+            matInput
+            [formControl]="trackGuess"
+            [matAutocomplete]="auto"
+            (keyup.enter)="checkGuess()"
+            >
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+</form>
+<div>
+    <button (click)="skip()">Skip</button>
+    <label>{{guessResult}}</label>
+    <button (click)="checkGuess()">Submit</button>
+</div>
+
+
+<div>
+    <button (click)="playAgain()">Play again</button>
+</div>

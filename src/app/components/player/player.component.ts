@@ -21,7 +21,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.player.connect();
     }
 
-    this.player.currentTrack.subscribe(currentTrack => {
+    player.currentTrack$.subscribe(currentTrack => {
       this.ngZone.run( () => {
         this.currentTrack = currentTrack.name;
      });

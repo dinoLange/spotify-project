@@ -14,6 +14,8 @@ export class GameService {
 
   tracks$ = this.tracks.asObservable();
   currentTrack!: Track;
+  position: number = 0;
+  duration: number = 1;
   
   constructor(private spotify: SpotifyService, private player: PlayerService) { }
 
@@ -28,14 +30,30 @@ export class GameService {
 
   chooseRandomSong() {
     var tracks = this.tracks.getValue();
+    this.duration = 1;
     this.currentTrack = tracks[Math.floor(Math.random() * tracks.length)];
   }
 
   playSong() {
-    var position = Math.floor(Math.random() * this.currentTrack.duration_ms)
+    this.position = Math.floor(Math.random() * this.currentTrack.duration_ms)
     if (this.currentTrack) {
-      this.player.playTrack(this.currentTrack.uri, position, 1);
+      this.player.initTrack(this.currentTrack.uri);
     }
   }
+
+  playSongAgain() {
+    if (this.currentTrack) {
+      this.player.playCurrentTrack(this.position, this.duration)
+    }
+  }
+
+  skip() {
+    this.position = Math.floor(Math.random() * this.currentTrack.duration_ms)
+    this.duration += 1;
+    if (this.currentTrack) {
+      this.player.playCurrentTrack(this.position, this.duration)
+    }  
+  }
+
 
 }

@@ -33,17 +33,10 @@ export class SpotifyService {
     }
   }
 
-  playTrack(uri: string, device_id: string, position: number, duration: number) { 
+  playTrack(uri: string, device_id: string, position: number) { 
     var playUrl = 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id;
     var body = JSON.stringify({ uris: [uri], position_ms: position });
     return this.http.put<any>(playUrl, body, { 'headers': this.headers });
-    // setTimeout(() => 
-    // {
-    //   var pauseUrl = 'https://api.spotify.com/v1/me/player/pause?device_id=' + device_id;
-    //   this.http.put<any>(pauseUrl, {}, { 'headers': this.headers }).subscribe();
-
-    // },
-    // duration*1000);
   }
 
   playContext(context_uri: string, device_id: string) {
