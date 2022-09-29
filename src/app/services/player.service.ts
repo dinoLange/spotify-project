@@ -11,21 +11,25 @@ export class PlayerService {
 
   player!: Spotify.Player;
   device_id!: string;
+  
   currentTrack: Subject<Spotify.Track> = new Subject<Spotify.Track>();
   currentTrack$: Observable<Spotify.Track> = this.currentTrack.asObservable();
+  position: Subject<Number> = new Subject<Number>();
+  position$: Observable<Number> = this.position.asObservable();
+  paused: Subject<Boolean> = new Subject<Boolean>();
+  paused$: Observable<Boolean> = this.paused.asObservable();
+  
   forcePause = false;
   forcePauseCounter = 0;
+  lastPaused: boolean = true;
 
   constructor(private spotify: SpotifyService) { }
 
 
   initTrack(uri: string) {
     this.forcePause = true;
-    this.spotify.playTrack(uri, this.device_id, 0).subscribe(() => {}); 
-    console.log('init track');
-       
+    this.spotify.playTrack(uri, this.device_id, 0).subscribe(() => {});       
   }
-
 
   playCurrentTrack(position: number, duration: number) {
     this.player.seek(position);
@@ -86,20 +90,22 @@ export class PlayerService {
     });
 
     this.player.addListener('player_state_changed', ({
-      track_window: {current_track}
+      track_window: {current_track}, position
     }) => {    
       this.currentTrack.next(current_track);
+      this.position.next(position);
     });
 
     this.player.addListener('player_state_changed', ({paused}) => {
+      this.paused.next(paused);
+
       if (this.forcePause && !paused) {
-        this.forcePauseCounter++;
-      }
-      if (this.forcePause && this.forcePauseCounter == 3) {
         this.player.pause();
-        this.forcePause = false;
-        this.forcePauseCounter = 0; 
-      }            
+      }
+      if (paused && !this.lastPaused) {
+        this.forcePause = false;      
+      }
+      this.lastPaused = paused;
     });
 
   }

@@ -38,6 +38,9 @@ export class GameService {
     this.position = Math.floor(Math.random() * this.currentTrack.duration_ms)
     if (this.currentTrack) {
       this.player.initTrack(this.currentTrack.uri);
+      setTimeout(() => {
+        this.playSongAgain();
+      }, 1000)
     }
   }
 

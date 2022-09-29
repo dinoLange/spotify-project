@@ -16,9 +16,12 @@ import { MatListModule} from '@angular/material/list'
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
- 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +43,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatProgressBarModule,
+    MatCardModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

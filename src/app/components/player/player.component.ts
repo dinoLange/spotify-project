@@ -1,4 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { interval, Observable, Subscription, timer } from 'rxjs';
 import { SpotifyService } from 'src/app/services/api/spotify.service';
 import { PlayerService } from 'src/app/services/player.service';
 
@@ -9,23 +10,38 @@ import { PlayerService } from 'src/app/services/player.service';
 })
 export class PlayerComponent implements OnInit, OnDestroy {
   currentTrack!: String;
+  progressValue = 0;
+  bufferValue = 0;
+  trackDuration!: number;
 
-  constructor(private spotify: SpotifyService, private player: PlayerService, private ngZone: NgZone ) { 
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
+  timer;
 
-    document.body.appendChild(script);
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      this.player.initSpotifyWebPlayer(this.spotify.getToken());
-      this.player.connect();
-    }
+  progressSubscription: Subscription | undefined;
+  paused: Boolean = true;
+
+  constructor(private player: PlayerService, private ngZone: NgZone ) { 
+     player.position$.subscribe(position => {
+      this.progressValue = (position.valueOf()/this.trackDuration) * 100;
+     // this.bufferValue = ((position.valueOf() + 1000)/this.trackDuration) * 100;
+    });
+
+    player.paused$.subscribe(paused => {
+      this.paused = paused;
+    })
 
     player.currentTrack$.subscribe(currentTrack => {
-      this.ngZone.run( () => {
+      this.ngZone.run(() => {
         this.currentTrack = currentTrack.name;
+        this.trackDuration = currentTrack.duration_ms;
      });
     });
+
+    this.timer = timer(0, 1000);
+    this.timer.subscribe((t) => {
+      if (!this.paused) {
+        this.progressValue++;
+      }
+    })
   }
 
   previousTrack() {

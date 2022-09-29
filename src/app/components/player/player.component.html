@@ -1,6 +1,17 @@
-<label>Spielt gerade: {{currentTrack}}</label>
+<mat-card>
+    <mat-card-content>    
+        <mat-progress-bar
+          class="example-margin"
+          mode="determinate"
+          [value]="progressValue"
+          [bufferValue]="bufferValue">
+      </mat-progress-bar>
+    </mat-card-content>
+</mat-card>
+
+<!-- <label>Spielt gerade: {{currentTrack}}</label>
 <div>
     <button (click)="previousTrack()">Prev</button>
     <button (click)="togglePlay()">Toggle Play</button>
     <button (click)="nextTrack()">Next</button>
-</div>
+</div> -->
