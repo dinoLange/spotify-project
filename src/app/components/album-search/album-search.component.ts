@@ -4,6 +4,7 @@ import {SpotifyService } from 'src/app/services/api/spotify.service';
 import { Album } from 'src/app/models/album';
 import { SearchItem } from 'src/app/models/search-item';
 import { PlayerService } from 'src/app/services/player.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-album-search',
@@ -13,19 +14,24 @@ import { PlayerService } from 'src/app/services/player.service';
 export class AlbumSearchComponent implements OnInit {
 
   albums: Album[] = [];
-  
+  searchForm = new FormControl('');
+
   constructor(private spotify: SpotifyService, private player: PlayerService) { 
 
   }
   
   
-  search(searchString: string) {   
-    this.spotify.albumSearch(searchString).subscribe(
-      (result:SearchItem) => {
-        console.log("result", result.albums);        
-        this.albums = result.albums.items;
-      }
-    );
+  search() {   
+    if (this.searchForm.getRawValue() != null) {
+      console.log('search', this.searchForm.getRawValue());
+      
+      this.spotify.albumSearch(this.searchForm.getRawValue()!).subscribe(
+        (result:SearchItem) => {
+          console.log("result", result.albums);        
+          this.albums = result.albums.items;
+        }
+      );
+    }
   }
 
   play(album: Album) {

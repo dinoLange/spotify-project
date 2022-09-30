@@ -14,7 +14,7 @@ export class SpotifyService {
 
   apiBase = 'https://api.spotify.com/v1';
 
-  public albumSearch(searchString: String,) {
+  public albumSearch(searchString: string) {
     var url = this.apiBase + "/search?q=" + searchString + "&type=album";
     return this.apiCall(url);
   }

@@ -1,13 +1,29 @@
+<mat-card>
+    <mat-card-content>  
+        <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Album Search:</mat-label>
+                <input type="text"
+                        placeholder="Pick one"
+                        aria-label="Number"
+                        matInput
+                        [formControl] = "searchForm"
+                        (keyup.enter)="search()"
+                        >
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>
+<mat-card *ngIf="albums">
+    <mat-card-content>  
+        <mat-nav-list>
+            <mat-list-item [routerLink]="['/game', 'album', album.id]" *ngFor="let album of albums">
+                <div matLine>
+                    <p style="float:left">{{album.artists[0].name}}</p>
+                    <p style="float:right">{{album.name}}</p>
+                </div>      
+                </mat-list-item>
+            </mat-nav-list>
+    </mat-card-content>
+</mat-card>
 
-<div >
-    <label for="search-box">Album Search</label>
-    <input #searchBox id="search-box" (keyup.enter)="search(searchBox.value)"/>
-    <button (click)="search(searchBox.value)"> Suchen </button>
-    <ul class="search-result" *ngIf="albums">
-        <li *ngFor="let album of albums" >
-            Artist: {{album.artists[0].name}} Name: {{album.name}} 
-            <button (click)="play(album)">Play</button>
-            <button [routerLink]="['/game', 'album', album.id]">Start Game</button>
-        </li>
-    </ul>
-</div>

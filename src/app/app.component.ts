@@ -18,8 +18,8 @@ export class AppComponent {
     console.log('construct player');
     
     window.onSpotifyWebPlaybackSDKReady = () => {
-      this.player.initSpotifyWebPlayer(this.spotify.getToken());
-      this.player.connect();
+      // this.player.initSpotifyWebPlayer(this.spotify.getToken());
+      // this.player.connect();
     }
   }
   

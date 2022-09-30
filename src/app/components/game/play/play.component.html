@@ -3,36 +3,34 @@
 <app-player></app-player>
 <mat-card>
     <mat-card-content>  
-    <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Guess:</mat-label>
-        <input type="text"
-                placeholder="Pick one"
-                aria-label="Number"
-                matInput
-                [formControl]="trackGuess"
-                [matAutocomplete]="auto"
-                (keyup.enter)="checkGuess()"
-                >
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    </form>
+        <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Guess:</mat-label>
+                <input type="text"
+                        placeholder="Pick a track"
+                        aria-label="Number"
+                        matInput
+                        [formControl]="trackGuess"
+                        [matAutocomplete]="auto"
+                        (keyup.enter)="checkGuess()"
+                        >
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
     </mat-card-content>
 </mat-card>
 <mat-card>
     <mat-card-content>  
         <label>{{guessResult}}</label>
-    </mat-card-content>
-</mat-card>
-<mat-card>
-    <mat-card-content>  
-        <button mat-raised-button color="primary" (click)="skip()">Skip</button>
-        <button mat-raised-button color="primary" (click)="playAgain()">Play again</button>
-        <button mat-raised-button color="primary" (click)="checkGuess()">Submit</button>
+        <div class="example-button-row">
+            <button class="flex-button" mat-raised-button color="primary" (click)="skip()">Skip</button>
+            <button class="flex-button" mat-raised-button color="primary" (click)="playAgain()">Play again</button>
+            <button class="flex-button" mat-raised-button color="primary" (click)="checkGuess()">Submit</button>
+        </div>
     </mat-card-content>
 </mat-card>
 

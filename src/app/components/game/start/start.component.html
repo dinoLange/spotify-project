@@ -1,9 +1,21 @@
-<p>Do you want to start a game with these songs?</p>
-<button [routerLink]="['play']">Play!</button>
-<div *ngIf="tracks">
-    <mat-list>
-        <mat-list-item style="color: black" *ngFor="let track of tracks">
-            {{track.name}}
-        </mat-list-item>
-    </mat-list>
-</div>
+<mat-card *ngIf="tracks">
+    <mat-card-content>  
+        <div style="text-align: center; display: flex;">
+            <p style="margin: auto; margin-left:0%">Do you want to start a game with these songs?</p>
+            <button style="margin-left:auto;" mat-raised-button color="primary" [routerLink]="['play']">Play!</button>
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-divider></mat-divider>
+<mat-card *ngIf="tracks">
+    <mat-card-content>   
+        <mat-list>
+        <mat-list-item *ngFor="let track of tracks">
+                <div matLine>
+                    <p style="float:left">{{track.artists[0].name}}</p>
+                    <p style="float:right">{{track.name}}</p>
+                </div>                
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>
