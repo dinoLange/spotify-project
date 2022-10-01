@@ -58,8 +58,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   
 
   ngOnDestroy() {
-    console.log('destroyed');
-    this.player.disconnect();
+
   }
 
   ngOnInit(): void {

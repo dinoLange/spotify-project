@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import {FormControl} from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-play',
@@ -15,7 +16,7 @@ export class PlayComponent implements OnInit {
   options!: string[];
   filteredOptions!: Observable<string[]>;
 
-  constructor(private game: GameService) { 
+  constructor(private game: GameService, private router: Router) { 
     this.game.tracks$.subscribe(tracks => {
       this.options = tracks.map(function (track) {
         return track.name;
@@ -27,8 +28,7 @@ export class PlayComponent implements OnInit {
     this.game.playSongAgain();
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
     this.filteredOptions = this.trackGuess.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -44,15 +44,17 @@ export class PlayComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  skip() {
+  skipTry() {
     this.game.skip()
   }
   
   checkGuess() {
     if (this.trackGuess.getRawValue() === this.game.currentTrack.name) {
-      this.guessResult = 'you are correct';      
+      this.game.correctGuess();    
+      this.router.navigateByUrl('/game/finish')
+        
     } else {
-      this.guessResult = 'WRONG!';      
+      this.game.incorrectGuess();
     }
   }
 

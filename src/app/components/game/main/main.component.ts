@@ -18,9 +18,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var id: Number = this.route.snapshot.params['id'];
-    var type: string = this.route.snapshot.params['type'];
-    this.game.loadTrackList(id, type);
   }
 
 

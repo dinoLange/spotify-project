@@ -12,11 +12,17 @@ import { GameService } from 'src/app/services/game.service';
 export class StartComponent implements OnInit, OnDestroy {
 
   tracks!: Track[];
-  subscription: Subscription;
+  trackSubscription: Subscription;
+  listName = '';
+  listNameSubscription: Subscription;
+
 
   constructor(private game: GameService) { 
-    this.subscription = game.tracks$.subscribe(tracks => {
+    this.trackSubscription = game.tracks$.subscribe(tracks => {
       this.tracks = tracks;      
+    })
+    this.listNameSubscription = game.listName$.subscribe(listName => {
+      this.listName = listName;
     })
   }
 
@@ -28,7 +34,8 @@ export class StartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.trackSubscription.unsubscribe();
+    this.listNameSubscription.unsubscribe();
   }
 
 }

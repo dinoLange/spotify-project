@@ -19,7 +19,7 @@ export class SpotifyService {
     return this.apiCall(url);
   }
 
-  public getAlbum(albumId: Number) {
+  public getAlbum(albumId: string) {
     var url = this.apiBase + "/albums/" + albumId;
     return this.apiCall(url);
   }

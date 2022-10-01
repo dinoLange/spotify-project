@@ -5,6 +5,7 @@ import { Album } from 'src/app/models/album';
 import { SearchItem } from 'src/app/models/search-item';
 import { PlayerService } from 'src/app/services/player.service';
 import { FormControl } from '@angular/forms';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-album-search',
@@ -13,10 +14,11 @@ import { FormControl } from '@angular/forms';
 })
 export class AlbumSearchComponent implements OnInit {
 
+
   albums: Album[] = [];
   searchForm = new FormControl('');
 
-  constructor(private spotify: SpotifyService, private player: PlayerService) { 
+  constructor(private spotify: SpotifyService, private player: PlayerService, private game: GameService) { 
 
   }
   
@@ -36,6 +38,10 @@ export class AlbumSearchComponent implements OnInit {
 
   play(album: Album) {
     this.player.playAlbum(album.uri);
+  }
+
+  startGame(album: Album) {   
+    this.game.loadTrackList(album.id, 'album');
   }
     
   ngOnInit(): void {  }

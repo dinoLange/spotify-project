@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/spotify', pathMatch: 'full' },
   {path: 'spotify', component: AlbumSearchComponent},
   {path: 'callback', component: LoginCallbackComponent},
-  {path: 'game/:type/:id', component: MainComponent,
+  {path: 'game', component: MainComponent,
     children: [
       {path: '', component: StartComponent},
       {path: 'play', component: PlayComponent},

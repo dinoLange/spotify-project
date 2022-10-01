@@ -9,6 +9,7 @@
 <mat-divider></mat-divider>
 <mat-card *ngIf="tracks">
     <mat-card-content>   
+        <mat-label>{{listName}}</mat-label>
         <mat-list>
         <mat-list-item *ngFor="let track of tracks">
                 <div matLine>
