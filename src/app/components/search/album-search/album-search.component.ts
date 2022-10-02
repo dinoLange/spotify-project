@@ -14,22 +14,15 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class AlbumSearchComponent implements OnInit {
 
-
   albums: Album[] = [];
   searchForm = new FormControl('');
 
-  constructor(private spotify: SpotifyService, private player: PlayerService, private game: GameService) { 
-
-  }
-  
-  
+  constructor(private spotify: SpotifyService, private player: PlayerService, private game: GameService) {}
+    
   search() {   
-    if (this.searchForm.getRawValue() != null) {
-      console.log('search', this.searchForm.getRawValue());
-      
+    if (this.searchForm.getRawValue() != null) {      
       this.spotify.albumSearch(this.searchForm.getRawValue()!).subscribe(
         (result:SearchItem) => {
-          console.log("result", result.albums);        
           this.albums = result.albums.items;
         }
       );
@@ -41,8 +34,9 @@ export class AlbumSearchComponent implements OnInit {
   }
 
   startGame(album: Album) {   
-    this.game.loadTrackList(album.id, 'album');
+    this.game.loadTrackListForAlbum(album.id);
   }
     
-  ngOnInit(): void {  }
+  ngOnInit(): void {}
+
 }

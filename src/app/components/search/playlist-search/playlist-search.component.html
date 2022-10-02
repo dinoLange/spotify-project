@@ -1,0 +1,12 @@
+<mat-card *ngIf="playlists">
+    <mat-card-content>  
+        <mat-nav-list>
+            <mat-list-item [routerLink]="['/game']" (click)="startGame(playlist)" *ngFor="let playlist of playlists"> 
+                <div matLine>
+                    <p style="float:right">{{playlist.name}}</p>
+                </div>      
+                </mat-list-item>
+            </mat-nav-list>
+    </mat-card-content>
+</mat-card>
+

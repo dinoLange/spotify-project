@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Album } from '../models/album';
+import { Playlist, Item } from '../models/playlist';
 import { Track } from '../models/track';
 import { SpotifyService } from './api/spotify.service';
 import { PlayerService } from './player.service';
@@ -19,17 +20,31 @@ export class GameService {
   currentTrack!: Track;
   position: number = 0;
   duration: number = 1;
+  guessedCorrect: boolean = false;
   
 
 
   constructor(private spotify: SpotifyService, private player: PlayerService) { }
 
 
-  loadTrackList(id: string, type: string) {
-    // switch case other types
+  loadTrackListForAlbum(id: string) {    
     this.spotify.getAlbum(id).subscribe((result:Album) => {    
       // limited to 50 tracks             
       this.tracks.next(result.tracks.items);     
+      this.listName.next(result.name);     
+    });
+  }
+
+  loadTrackListForPlayList(id: string) {    
+    this.spotify.getPlaylist(id).subscribe((result:Playlist) => {    
+      console.log('getPlaylist', result);
+      
+      // limited to 50 tracks             
+      var items: Item[] = result.tracks.items;
+      this.tracks.next(
+        items.map(function(item) {
+          return item.track
+        }));     
       this.listName.next(result.name);     
     });
   }
@@ -38,8 +53,6 @@ export class GameService {
     var tracks = this.tracks.getValue();
     this.duration = 1;
     this.currentTrack = tracks[Math.floor(Math.random() * tracks.length)];
-    console.log('current track', this.currentTrack);
-    
   }
 
   playSong() {
@@ -67,10 +80,12 @@ export class GameService {
   }
 
   correctGuess() {
+    this.guessedCorrect = true;
     
   }
 
   incorrectGuess() {
+    this.guessedCorrect = false;
     this.skip();
   }
 

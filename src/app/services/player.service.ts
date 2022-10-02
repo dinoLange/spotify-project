@@ -49,7 +49,7 @@ export class PlayerService {
   
   initSpotifyWebPlayer(token: string) {
     this.player = new Spotify.Player({
-      name: 'Web Playback SDK Quick Start Player',
+      name: 'Spordlfy',
       getOAuthToken: cb => { cb(token); },
       volume: 0.5
     });

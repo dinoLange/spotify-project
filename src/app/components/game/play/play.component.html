@@ -1,5 +1,15 @@
-
-
+<mat-card>
+    <mat-card-content>  
+        <mat-list>
+            <mat-list-item *ngFor="let guess of guesses">
+                <div matLine>
+                    <p>{{guess}}</p>
+                </div>                
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>
+<mat-card>
 <app-player></app-player>
 <mat-card>
     <mat-card-content>  

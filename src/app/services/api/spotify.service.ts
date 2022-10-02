@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
 
@@ -15,12 +15,22 @@ export class SpotifyService {
   apiBase = 'https://api.spotify.com/v1';
 
   public albumSearch(searchString: string) {
-    var url = this.apiBase + "/search?q=" + searchString + "&type=album";
+    var url = this.apiBase + '/search?q=' + searchString + '&type=album';
+    return this.apiCall(url);
+  }
+
+  public loadMyPlaylists() {
+    var url = this.apiBase + '/me/playlists';
     return this.apiCall(url);
   }
 
   public getAlbum(albumId: string) {
-    var url = this.apiBase + "/albums/" + albumId;
+    var url = this.apiBase + '/albums/' + albumId;
+    return this.apiCall(url);
+  }
+
+  public getPlaylist(playlistId: string) {
+    var url = this.apiBase + '/playlists/' + playlistId;
     return this.apiCall(url);
   }
 
@@ -48,10 +58,8 @@ export class SpotifyService {
   
 
   login() {
-    console.log('start login');
-
     var client_id = '1ec6cb1a181e47368d762606d2851929'; // Your client id
-    var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+    var redirect_uri = isDevMode() ? 'http://localhost:8888/callback' : 'https://dinolange.github.io/spotify-project/callback'; // Your redirect uri
 
     // var state = generateRandomString(16);
     // localStorage.setItem(stateKey, state);

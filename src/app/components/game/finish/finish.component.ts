@@ -9,11 +9,13 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class FinishComponent implements OnInit {
   track!: Track;
+  guessedCorrectly = false;
 
   constructor(private game: GameService) { }
 
 
   ngOnInit(): void {
+    this.guessedCorrectly = this.game.guessedCorrect
     this.track = this.game.currentTrack;
   }
 

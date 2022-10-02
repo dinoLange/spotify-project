@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { SpotifyService } from './services/api/spotify.service';
 import { PlayerService } from './services/player.service';
 
@@ -15,12 +15,13 @@ export class AppComponent {
     script.async = true;
 
     document.body.appendChild(script);
-    console.log('construct player');
     
     window.onSpotifyWebPlaybackSDKReady = () => {
       this.player.initSpotifyWebPlayer(this.spotify.getToken());
       this.player.connect();
     }
+    window.onbeforeunload = () => this.player.disconnect();;
+   
   }
   
 }

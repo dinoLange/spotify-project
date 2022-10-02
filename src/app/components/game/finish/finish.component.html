@@ -1,6 +1,11 @@
-<mat-card>
+<mat-card *ngIf="guessedCorrectly">
     <mat-card-content>  
-        <p>Good Job! {{track.name}} is correct</p>
+        <p>Good Job! {{track.name}} is the correct answer.</p>
+    </mat-card-content>
+</mat-card>
+<mat-card *ngIf="!guessedCorrectly">
+    <mat-card-content>  
+        <p>Wrong! {{track.name}} is the correct answer.</p>
     </mat-card-content>
 </mat-card>
 <mat-card>
