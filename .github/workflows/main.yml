@@ -33,5 +33,5 @@ jobs:
         run: ls -R ./dist
         
       - name: Deploy 🚀
-        run: npm deploy
+        run: npm run deploy
 
