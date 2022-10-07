@@ -59,7 +59,7 @@ export class SpotifyService {
 
   login() {
     var client_id = '1ec6cb1a181e47368d762606d2851929'; // Your client id
-    var redirect_uri = isDevMode() ? 'http://localhost:8888/callback' : 'https://dinolange.github.io/spotify-project/spotify/callback'; // Your redirect uri
+    var redirect_uri = isDevMode() ? 'http://localhost:8888/callback' : 'https://dinolange.github.io/spotify-project/callback'; // Your redirect uri
 
     // var state = generateRandomString(16);
     // localStorage.setItem(stateKey, state);
