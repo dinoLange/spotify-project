@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=/spotify-project/ -c development --no-silent",
+    "build": "ng build --base-href=/spotify-project/ -c development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng deploy --base-href=/spotify-project/ -c development --no-silent"
