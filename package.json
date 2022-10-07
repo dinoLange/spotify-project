@@ -7,7 +7,7 @@
     "build": "ng build --base-href=/spotify-project/spotify/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy --base-href=/spotify-project/spotify/ --no-silent --email=dino.lange@gmail.com --name=Dino "
+    "deploy": "ng deploy --base-href=/spotify-project/spotify/ --no-silent"
   },
   "private": true,
   "dependencies": {
