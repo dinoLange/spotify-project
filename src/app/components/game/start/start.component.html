@@ -2,19 +2,31 @@
     <mat-card-content>  
         <div style="text-align: center; display: flex;">
             <p style="margin: auto; margin-left:0%">Do you want to start a game with these songs?</p>
-            <button style="margin-left:auto;" mat-raised-button color="primary" [routerLink]="['play']">Play!</button>
+                        <button style="margin-left:auto;" mat-raised-button color="primary" [routerLink]="['play']">Play!</button>
         </div>
     </mat-card-content>
 </mat-card>
 <mat-divider></mat-divider>
+<mat-card *ngIf="listName">
+    <mat-card-header  style="height: auto !important;" >   
+        <mat-icon mat-card-avatar>        
+            <img [src]="listImage.url" height="100" width="100">
+        </mat-icon>
+        <mat-card-title>{{listName}}</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<mat-divider></mat-divider>
 <mat-card *ngIf="tracks">
     <mat-card-content>   
-        <mat-label>{{listName}}</mat-label>
         <mat-list>
             <mat-list-item *ngFor="let track of tracks">
-                <div matLine>
-                    <p style="float:left">{{track.artists[0].name}}</p>
-                    <p style="float:right">{{track.name}}</p>
+                <div matLine>                    
+                    <p style="float:left">
+                        {{track.artists[0].name}}
+                    </p>                    
+                    <p style="float:right"> 
+                        {{track.name}}
+                    </p>
                 </div>                
             </mat-list-item>
         </mat-list>

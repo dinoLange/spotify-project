@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Album } from '../models/album';
+import { Image } from '../models/image';
 import { Playlist, Item } from '../models/playlist';
 import { Track } from '../models/track';
 import { SpotifyService } from './api/spotify.service';
@@ -15,7 +16,9 @@ export class GameService {
   private tracks = new BehaviorSubject<Track[]>([]);
   tracks$ = this.tracks.asObservable();
   private listName = new BehaviorSubject<string>('');
-  listName$ = this.listName.asObservable();
+  listName$ = this.listName.asObservable();  
+  private listImage = new Subject<Image>();
+  listImage$ = this.listImage.asObservable();
 
   currentTrack!: Track;
   position: number = 0;
@@ -31,7 +34,8 @@ export class GameService {
     this.spotify.getAlbum(id).subscribe((result:Album) => {    
       // limited to 50 tracks             
       this.tracks.next(result.tracks.items);     
-      this.listName.next(result.name);     
+      this.listName.next(result.name); 
+      this.listImage.next(result.images[0])    
     });
   }
 
@@ -45,7 +49,8 @@ export class GameService {
         items.map(function(item) {
           return item.track
         }));     
-      this.listName.next(result.name);     
+      this.listName.next(result.name); 
+      this.listImage.next(result.images[0])        
     });
   }
 

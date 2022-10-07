@@ -1,4 +1,5 @@
 import { Track } from "./track";
+import { Image } from "./image";
 
 export interface Playlist {
     id: string;
@@ -6,6 +7,8 @@ export interface Playlist {
 
     name: string;
     tracks: Tracks;
+    images: Image[];
+
 }
 
 

@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>  
-        <form class="example-form">
+        <form>
             <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Album Search:</mat-label>
                 <input type="text"
@@ -16,14 +16,15 @@
 </mat-card>
 <mat-card *ngIf="albums">
     <mat-card-content>  
-        <mat-nav-list>
+        <mat-action-list>
             <mat-list-item [routerLink]="['/game']" (click)="startGame(album)" *ngFor="let album of albums"> 
-                <div matLine>
-                    <p style="float:left">{{album.artists[0].name}}</p>
-                    <p style="float:right">{{album.name}}</p>
-                </div>      
-                </mat-list-item>
-            </mat-nav-list>
+                <mat-icon mat-card-avatar>        
+                    <img [src]="album.images[0].url" height="50" width="50">
+                </mat-icon>
+                <div mat-line>{{album.name}}</div>
+                <div mat-line>{{album.artists[0].name}}</div>
+            </mat-list-item>
+        </mat-action-list>
     </mat-card-content>
 </mat-card>
 
