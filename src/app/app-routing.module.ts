@@ -15,8 +15,8 @@ const routes: Routes = [
     children: [
       {path: 'album', component: AlbumSearchComponent},
       {path: 'playlist', component: PlaylistSearchComponent},
-      {path: 'callback', component: LoginCallbackComponent},
     ]},
+  {path: 'callback', component: LoginCallbackComponent},
   {path: 'game', component: MainComponent,
     children: [
       {path: '', component: StartComponent},
