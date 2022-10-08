@@ -34,13 +34,14 @@ export class PlayerService {
   playCurrentTrack(position: number, duration: number) {
     this.player.seek(position);
     this.player.resume();
-    
-    setTimeout(() => 
-      {
-        this.player.pause();
-      },
-      duration*1000
-    );
+    if (duration > 0) {
+      setTimeout(() => 
+        {
+          this.player.pause();
+        },
+        duration*1000
+      );
+    }
   }
 
   playAlbum(uri: string) {

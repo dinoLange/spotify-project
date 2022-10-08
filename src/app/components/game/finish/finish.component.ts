@@ -17,6 +17,7 @@ export class FinishComponent implements OnInit {
   ngOnInit(): void {
     this.guessedCorrectly = this.game.guessedCorrect
     this.track = this.game.currentTrack;
+    this.game.playSongFromBeginning();
   }
 
 }

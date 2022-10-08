@@ -54,6 +54,7 @@ export class PlayComponent implements OnInit {
     this.guesses[this.guessNumber] = '    skipped';
     this.guessNumber++;
     if (this.guessNumber > 4) {
+      this.game.incorrectGuess();
       this.router.navigateByUrl('/game/finish');
     }
   }

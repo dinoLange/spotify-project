@@ -15,12 +15,12 @@ export class AppComponent {
     script.async = true;
 
     document.body.appendChild(script);
-    
+
     window.onSpotifyWebPlaybackSDKReady = () => {
       this.player.initSpotifyWebPlayer(this.spotify.getToken());
       this.player.connect();
     }
-    window.onbeforeunload = () => this.player.disconnect();;
+    window.onbeforeunload = () => this.player.disconnect();  
    
   }
   

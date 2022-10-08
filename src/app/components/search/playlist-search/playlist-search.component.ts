@@ -24,9 +24,7 @@ export class PlaylistSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spotify.loadMyPlaylists().subscribe((result) => {
-      console.log(result);
-      
+    this.spotify.loadMyPlaylists().subscribe((result) => {    
       this.playlists = result.items;
     });
   }

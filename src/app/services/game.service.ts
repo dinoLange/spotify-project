@@ -24,6 +24,8 @@ export class GameService {
   position: number = 0;
   duration: number = 1;
   guessedCorrect: boolean = false;
+
+  lastTracks: Track[] = [];
   
 
 
@@ -41,8 +43,7 @@ export class GameService {
 
   loadTrackListForPlayList(id: string) {    
     this.spotify.getPlaylist(id).subscribe((result:Playlist) => {    
-      console.log('getPlaylist', result);
-      
+     
       // limited to 50 tracks             
       var items: Item[] = result.tracks.items;
       this.tracks.next(
@@ -57,11 +58,25 @@ export class GameService {
   chooseRandomSong() {
     var tracks = this.tracks.getValue();
     this.duration = 1;
-    this.currentTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    var chosenTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    
+    if (this.lastTracks.includes(chosenTrack)) {
+      this.chooseRandomSong();
+    } else {
+      this.rememberLastSong(chosenTrack);
+      this.currentTrack = chosenTrack;
+    }  
+  }
+
+  rememberLastSong(chosenTrack: Track) {
+    this.lastTracks.push(chosenTrack);
+    if (this.lastTracks.length > 5) {
+      this.lastTracks.shift();
+    }
   }
 
   playSong() {
-    this.position = Math.floor(Math.random() * this.currentTrack.duration_ms)
+    this.chooseRandomPosition();
     if (this.currentTrack) {
       this.player.initTrack(this.currentTrack.uri);
       setTimeout(() => {
@@ -76,23 +91,35 @@ export class GameService {
     }
   }
 
+  playSongFromBeginning() {
+    if (this.currentTrack) {
+      this.player.playCurrentTrack(0, 0)
+    }
+  }
+
   skip() {
-    this.position = Math.floor(Math.random() * this.currentTrack.duration_ms)
+    this.chooseRandomPosition();
     this.duration += 1;
     if (this.currentTrack) {
       this.player.playCurrentTrack(this.position, this.duration)
     }  
   }
 
+  chooseRandomPosition() {
+    this.position =  Math.floor(this.randomIntFromInterval(0.1, 0.8) * this.currentTrack.duration_ms);
+  }
+
+  randomIntFromInterval(min: number, max: number): number { 
+    return Math.random() * (max - min) + min
+  }
+
   correctGuess() {
-    this.guessedCorrect = true;
-    
+    this.guessedCorrect = true;    
   }
 
   incorrectGuess() {
     this.guessedCorrect = false;
     this.skip();
   }
-
 
 }

@@ -63,7 +63,7 @@ export class SpotifyService {
 
     // var state = generateRandomString(16);
     // localStorage.setItem(stateKey, state);
-    var scope = 'streaming user-read-private user-read-email';
+    var scope = 'streaming user-read-private user-read-email user-read-playback-state';
 
     var url = 'https://accounts.spotify.com/authorize';
     url += '?response_type=token';
@@ -89,6 +89,11 @@ export class SpotifyService {
     } else {
       return this.access_token;
     }
+  }
+
+  getAvailableDevices() {
+    var playUrl = 'https://api.spotify.com/v1/me/player/devices';
+    return this.http.get<any>(playUrl, {'headers': this.headers});
   }
 
 }
