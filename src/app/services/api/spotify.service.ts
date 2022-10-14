@@ -16,25 +16,30 @@ export class SpotifyService {
 
   public albumSearch(searchString: string) {
     var url = this.apiBase + '/search?q=' + searchString + '&type=album';
-    return this.apiCall(url);
+    return this.getCall(url);
   }
 
   public loadMyPlaylists() {
     var url = this.apiBase + '/me/playlists';
-    return this.apiCall(url);
+    return this.getCall(url);
   }
 
   public getAlbum(albumId: string) {
     var url = this.apiBase + '/albums/' + albumId;
-    return this.apiCall(url);
+    return this.getCall(url);
   }
 
   public getPlaylist(playlistId: string) {
     var url = this.apiBase + '/playlists/' + playlistId;
-    return this.apiCall(url);
+    return this.getCall(url);
   }
 
-  private apiCall(url: string) {  
+  public getTrackDetails(trackId: string) {
+    var url = this.apiBase + '/tracks/' + trackId;
+    return this.getCall(url);
+  } 
+
+  private getCall(url: string) {  
     if (!this.headers) {      
         this.login();
         return EMPTY;

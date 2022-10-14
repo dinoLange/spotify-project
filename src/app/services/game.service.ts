@@ -34,7 +34,9 @@ export class GameService {
 
   loadTrackListForAlbum(id: string) {    
     this.spotify.getAlbum(id).subscribe((result:Album) => {    
-      // limited to 50 tracks             
+      // limited to 50 tracks 
+      result.tracks.items = this.filterSuffix(result.tracks.items);
+      
       this.tracks.next(result.tracks.items);     
       this.listName.next(result.name); 
       this.listImage.next(result.images[0])    
@@ -43,16 +45,21 @@ export class GameService {
 
   loadTrackListForPlayList(id: string) {    
     this.spotify.getPlaylist(id).subscribe((result:Playlist) => {    
-     
       // limited to 50 tracks             
       var items: Item[] = result.tracks.items;
-      this.tracks.next(
-        items.map(function(item) {
-          return item.track
-        }));     
+      var tracks = items.map(function(item) {
+        return item.track
+      });  
+      this.tracks.next(this.filterSuffix(tracks));           
       this.listName.next(result.name); 
       this.listImage.next(result.images[0])        
     });
+  } 
+  
+  filterSuffix(tracks: Track[]): Track[] {
+    const regex = / - Remastered [0-9]+/;
+    tracks.forEach(track => track.name = track.name.replace(regex, ''));
+    return tracks;
   }
 
   chooseRandomSong() {
@@ -123,3 +130,5 @@ export class GameService {
   }
 
 }
+
+
