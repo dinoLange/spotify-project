@@ -78,7 +78,7 @@ export class PlayerService {
       console.error(message);
     });
 
-    this.player.getCurrentState().then(state => {
+    this.player.getCurrentState().then(state => {     
       if (!state) {
         console.error('User is not playing music through the Web Playback SDK');
         return;

@@ -1,10 +1,18 @@
-<mat-card>
-    <mat-card-content>  
-        <div class="example-button-row">
+<section class="section-margin">
+    <h3>Choose Game Mode:</h3>
+    <div class="example-button-row">
+        <div class="example-flex-container">
+          <div class="example-button-container">
             <button class="flex-button" mat-raised-button color="primary" [routerLink]="['album']" >Albums</button>
+          </div>
+          <div class="example-button-container">
             <button class="flex-button" mat-raised-button color="primary" [routerLink]="['playlist']">Playlists</button>
+          </div>
         </div>
-    </mat-card-content>
-</mat-card>
-<router-outlet></router-outlet>
+    </div>
+</section>
+<mat-divider></mat-divider>
+<section class="section-margin">
+    <router-outlet></router-outlet>
+</section>
 
