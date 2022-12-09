@@ -1,4 +1,6 @@
-.angular
+.angular/
 node_modules
 .vscode
 dist
+.idea/
+.editorconfig
